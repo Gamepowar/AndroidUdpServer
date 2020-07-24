@@ -86,13 +86,13 @@ public class WorkFile {
             idFiles.get(numberFile).createArrayPackets();
             idFiles.get(numberFile).packet[numberPacket] = idPacket;
             if(isFullFile(file)){
-                save(file);
+         //       save(file);
             }
         }
         else {
             idFiles.get(numberFile).packet[numberPacket] = idPacket;
             if(isFullFile(file)){
-                save(file);
+      //          save(file);
             }
         }
     }

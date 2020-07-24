@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayDeque;
+
 public class MainActivity extends AppCompatActivity {
 
     EditText editTextAddress, editTextPort;
@@ -45,7 +47,18 @@ public class MainActivity extends AppCompatActivity {
                             editTextAddress.getText().toString(),
                             Integer.parseInt(editTextPort.getText().toString()),
                             udpClientHandler);
-                    udpClientThread.start();
+
+                    System.err.println(editTextAddress.getText().toString()+"\n"+ editTextPort.getText().toString());
+                    ArrayDeque<byte[]> arrayDeque = new ArrayDeque<byte[]>();
+                    ProcessThread processThread = new ProcessThread(arrayDeque);
+                    System.err.println("2");
+                  //  while(processThread.running) {
+                        System.err.println("3");
+
+                        arrayDeque.addLast(udpClientThread.myStart());
+                        System.err.println("4");
+                   // }
+
 
                     buttonConnect.setEnabled(false);
                 }
