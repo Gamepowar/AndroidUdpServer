@@ -1,5 +1,6 @@
 package com.example.androidudpserver;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.FileOutputStream;
 import java.util.ArrayDeque;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,6 +22,22 @@ public class MainActivity extends AppCompatActivity {
 
     UdpClientHandler udpClientHandler;
     UdpClientThread udpClientThread;
+    public void save(WorkFile.IdFile idFile, int numberOfPackets){
+        String filename = "video.mov";
+        FileOutputStream outputStream;
+
+        try {
+            outputStream = openFileOutput(filename, MODE_PRIVATE);
+            for (int i = 0; i < numberOfPackets; i++){
+                outputStream.write(idFile.packet[i].file);
+            }
+
+            System.out.println(outputStream.getChannel());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,17 +64,17 @@ public class MainActivity extends AppCompatActivity {
                     udpClientThread = new UdpClientThread(
                             editTextAddress.getText().toString(),
                             Integer.parseInt(editTextPort.getText().toString()),
-                            udpClientHandler);
+                            udpClientHandler, getApplicationContext().getApplicationContext());
 
                     System.err.println(editTextAddress.getText().toString()+"\n"+ editTextPort.getText().toString());
-                    ArrayDeque<byte[]> arrayDeque = new ArrayDeque<byte[]>();
-                    ProcessThread processThread = new ProcessThread(arrayDeque);
-                    System.err.println("2");
+              //      ArrayDeque<byte[]> arrayDeque = new ArrayDeque<>();
+             //       ProcessThread processThread = new ProcessThread(arrayDeque);
+                 //   System.err.println("2");
                   //  while(processThread.running) {
-                        System.err.println("3");
+               //         System.err.println("3");
 
-                        arrayDeque.addLast(udpClientThread.myStart());
-                        System.err.println("4");
+                      /*  arrayDeque.addLast*/udpClientThread.start();;
+              //          System.err.println("4");
                    // }
 
 
@@ -64,13 +82,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
 
-    private void updateState(String state){
+  /*  private void updateState(String state){
         textViewState.setText(state);
     }
 
     private void updateRxMsg(String rxmsg){
         textViewRx.append(rxmsg + "\n");
-    }
+    }*/
 
     private void clientEnd(){
         udpClientThread = null;
@@ -89,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
             super();
             this.parent = parent;
         }
-
+/*
         @Override
         public void handleMessage(Message msg) {
 
@@ -107,6 +125,6 @@ public class MainActivity extends AppCompatActivity {
                     super.handleMessage(msg);
             }
 
-        }
+        }*/
     }
 }
