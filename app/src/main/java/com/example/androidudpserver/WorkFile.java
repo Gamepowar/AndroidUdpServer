@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-public class WorkFile {
+public class WorkFile extends Thread{
     public byte [] allReceivePacket;
     public int numberFile;
     public int numberPacket;
@@ -26,6 +26,7 @@ public class WorkFile {
         createFileList();
         this.context = context;
     }
+
 
     public class IdFile {
         public int numberFile;
@@ -105,7 +106,7 @@ public class WorkFile {
     }
 
     public void save(IdFile idFile){
-        String filename = "video.mov";
+        String filename = "video.mp4";
         FileOutputStream outputStream;
 
         try {
@@ -130,5 +131,10 @@ public class WorkFile {
         }
         return true;
     }
+
+    public void run(){
+        divis();
+    }
+//    public void start(){}
 
 }

@@ -1,6 +1,7 @@
 package com.example.androidudpserver;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,9 +22,11 @@ public class MainActivity extends AppCompatActivity {
     Button buttonConnect;
     TextView textViewState, textViewRx;
 
+    VideoView videoView;
+
     UdpClientHandler udpClientHandler;
     UdpClientThread udpClientThread;
-    public void save(WorkFile.IdFile idFile, int numberOfPackets){
+  /*  public void save(WorkFile.IdFile idFile, int numberOfPackets){
         String filename = "video.mov";
         FileOutputStream outputStream;
 
@@ -37,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +77,14 @@ public class MainActivity extends AppCompatActivity {
                   //  while(processThread.running) {
                //         System.err.println("3");
 
-                      /*  arrayDeque.addLast*/udpClientThread.start();;
+                      /*  arrayDeque.addLast*/udpClientThread.start();
+                      while (udpClientThread.isAlive()){}
+                    setContentView(R.layout.show_video);
+                    videoView = (VideoView)findViewById(R.id.videoView);
+
+                    /*videoView.setVideoURI(Uri.fromFile(getFileStreamPath("video.mp4")));*/
+                    videoView.setVideoURI(Uri.parse("video/screen.mp4"));
+
               //          System.err.println("4");
                    // }
 

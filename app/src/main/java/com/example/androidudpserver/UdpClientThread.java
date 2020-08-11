@@ -52,6 +52,7 @@ public class UdpClientThread extends Thread{
         sendState("connecting...");
         running = true;
         try {
+//            sendState("connected");
             socket = new DatagramSocket();
             address = InetAddress.getByName(dstAddress);
             buf = new byte[60 * 1024 + 4 * 4];
@@ -59,7 +60,6 @@ public class UdpClientThread extends Thread{
             DatagramPacket packet = new DatagramPacket(buf, buf.length, address, dstPort);
             System.out.println(address.toString() + "\n" + dstPort);
             socket.send(packet);
-//            sendState("connected");
             packet = new DatagramPacket(buf, buf.length);
             socket.receive(packet);
             WorkFile workFile = new WorkFile();
@@ -71,7 +71,8 @@ public class UdpClientThread extends Thread{
                 packet = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
                 workFile.setAllReceivePacket(buf);
-                workFile.divis();
+                workFile.run();
+                System.out.println("Пиздец");
             }
       //      buf = new byte[60*1024];
        //     sendState("...");
